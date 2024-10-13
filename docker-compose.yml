@@ -1,0 +1,46 @@
+version: '3.8'  # Specify Docker Compose version for clarity
+
+services:
+  registry-service:
+    image: registry
+    build:
+      context: .
+      dockerfile: service-registry/Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+
+  transaction-service:
+    image: transactions
+    build:
+      context: .
+      dockerfile: transactions/Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      - registry-service
+    ports:
+      - "8081:8081"
+    networks:
+      - app-network
+
+  accounts-service:
+    image: accounts
+    build:
+      context: .
+      dockerfile: accounts/Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      - registry-service
+    ports:
+      - "8082:8082"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

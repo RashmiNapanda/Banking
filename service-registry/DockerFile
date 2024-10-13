@@ -1,0 +1,27 @@
+# Stage 1: Build the application using Maven and OpenJDK 17
+FROM maven:3.8.5-openjdk-17 AS build
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the Maven project descriptor files and source code into the container
+COPY pom.xml service-registry/pom.xml
+COPY service-registry/src service-registry/src
+
+# Package the application
+RUN mvn -f service-registry/pom.xml clean package -DskipTests
+
+# Stage 2: Create a slim image for running the application
+FROM openjdk:17-jdk-slim
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the packaged JAR file from the build stage to the current stage
+COPY --from=build /app/service-registry/target/service-registry-*.jar registry.jar
+
+# Expose the Eureka server port
+EXPOSE 8761
+
+# Command to run the application
+CMD ["java", "-jar", "registry.jar"]

@@ -1,0 +1,27 @@
+# Stage 1: Build the application using Maven and OpenJDK 17
+FROM maven:3.8.5-openjdk-17 AS build
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the project files for Maven build
+COPY pom.xml transactions/pom.xml
+COPY transactions/src transactions/src
+
+# Build the project using Maven, skipping tests for faster builds
+RUN mvn -f transactions/pom.xml clean package -DskipTests
+
+# Stage 2: Create a lightweight image for running the application
+FROM openjdk:17-jdk-slim
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the packaged JAR file from the build stage to the current stage
+COPY --from=build /app/transactions/target/transactions-*.jar transactions.jar
+
+# Expose the application's port
+EXPOSE 8081
+
+# Run the application
+CMD ["java", "-jar", "transactions.jar"]
