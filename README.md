@@ -39,9 +39,9 @@ Transactions Service:
 4. Security: Usernames and passwords for API access are defined in application.properties.
 
 ## API End points to test
-Service registry- http://localhost:8761/login
-Open New Account- http://localhost:8082/api/v1/accounts/open/1?initialCredit=50
-Get customerAccountDetails- http://localhost:8082/api/v1/accounts/customer/1
+1. Service registry- http://localhost:8761/login
+2. Open New Account- http://localhost:8082/api/v1/accounts/open/1?initialCredit=50
+3. Get customerAccountDetails- http://localhost:8082/api/v1/accounts/customer/1
 
 
 ## Packaging structure
