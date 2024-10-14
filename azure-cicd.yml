@@ -12,7 +12,7 @@ variables:
   serviceConnection: '<your-service-connection>'
   appServiceName: '<your-app-service-name>'
   resourceGroupName: '<your-resource-group>'
-  imageTag: '$(registry)/$(imageName):$(Build.BuildId)'  # Consolidated image tag
+  imageTag: '$(registry)/$(imageName):$(Build.BuildId)'  
 
 steps:
 
