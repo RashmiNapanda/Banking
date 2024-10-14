@@ -2,7 +2,7 @@
 
 ## Frameworks and Tools Used
 
-Java 17, Spring Boot 3, Maven 3.8: For building and running the application.
+Java 19, Spring Boot 3, Maven 3.8: For building and running the application.
 Lombok: To reduce boilerplate code.
 MapStruct: For object mapping.
 OpenAPI 3.0.3: For API documentation.
